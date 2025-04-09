@@ -1,5 +1,6 @@
 "use client";
 import ImageCart from "@/component/ImageCart";
+import Pagination from "@/component/Pagination";
 import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -15,7 +16,6 @@ export default function Home() {
     if (fileInput.files) {
       const filesArray = Array.from(fileInput.files);
       setImages(filesArray);
-      //   fileInput.value = "";
       const formData = new FormData();
       formData.append("file", filesArray[0]);
       formData.append("upload_preset", uploadPreset as string);
@@ -28,7 +28,7 @@ export default function Home() {
           formData
         );
         fileInput.value = "";
-        console.log("Image uploaded successfully in Cloudinary");
+        // console.log("Image uploaded successfully in Cloudinary");
       } catch (err) {
         if (err instanceof Error) {
           console.log("error", err.message);
@@ -39,30 +39,40 @@ export default function Home() {
     }
   };
   const handleDelete = (index: number) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result) {
-        const updatedImages = images.filter((_, i) => i !== index);
-        setImages(updatedImages);
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-      }
-    });
+    const updatedImages = images.filter((_, i) => i !== index);
+    setImages(updatedImages);
+    console.log("Image deleted successfully", updatedImages);
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then((result) => {
+    //   if (result) {
+    //     const updatedImages = images.filter((_, i) => i !== index);
+    //     setImages(updatedImages);
+    //     Swal.fire({
+    //       title: "Deleted!",
+    //       text: "Your file has been deleted.",
+    //       icon: "success",
+    //     });
+    //   }
+    // });
   };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(8);
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfPastPost = indexOfLastPost - postsPerPage;
+    const currentPosts = images?.slice(indexOfPastPost, indexOfLastPost);
+
 
   return (
     <>
-      <div className="max-w-4xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white py-10 h-auto">
+      <div className="max-w-4xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white py-16 h-auto">
         <div className="py-6 flex justify-between items-center gap-5">
           <div>
             <h2 className="text-2xl text-black font-bold ">Image Gallery</h2>
@@ -85,7 +95,8 @@ export default function Home() {
           </div>
         </div>
 
-        <ImageCart Img={images} handleDelete={handleDelete} />
+        <ImageCart Img={currentPosts} handleDelete={handleDelete} />
+        <Pagination totalPosts={images.length} postsPerPage={postsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
     </>
   );

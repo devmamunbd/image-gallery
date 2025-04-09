@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useState } from "react";
 // import { useState } from "react";
 
 interface ImageCartProps {
@@ -7,13 +8,13 @@ interface ImageCartProps {
 }
 
 export default function ImageCart({ Img, handleDelete }: ImageCartProps) {
-//   const [image, setImage] = useState<File[]>(Img);
+  //   const [image, setImage] = useState<File[]>(Img);
 
 
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {Img.map((image, index) => (
+        {Img?.map((image, index) => (
           <div key={index}>
             <Image
               className="rounded-md w-[200px] h-[200px] object-cover cursor-pointer"
