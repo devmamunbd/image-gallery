@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useState } from "react";
 // import { useState } from "react";
 
 interface ImageCartProps {
@@ -13,7 +12,8 @@ export default function ImageCart({ Img, handleDelete }: ImageCartProps) {
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center
+  gap-4">
         {Img?.map((image, index) => (
           <div key={index}>
             <Image

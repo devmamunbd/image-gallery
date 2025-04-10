@@ -64,20 +64,20 @@ export default function Home() {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [postsPerPage, setPostsPerPage] = useState(8);
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfPastPost = indexOfLastPost - postsPerPage;
-    const currentPosts = images?.slice(indexOfPastPost, indexOfLastPost);
-
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfPastPost = indexOfLastPost - postsPerPage;
+  const currentPosts = images?.slice(indexOfPastPost, indexOfLastPost);
 
   return (
     <>
-      <div className="max-w-4xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white py-16 h-auto">
-        <div className="py-6 flex justify-between items-center gap-5">
+      <div className="max-w-4xl container mx-auto px-4 sm:px-6 lg:px-8 bg-white py-8 h-auto">
+        <div className="py-6 flex flex-col md:flex-row justify-between items-center gap-5">
           <div>
             <h2 className="text-2xl text-black font-bold ">Image Gallery</h2>
           </div>
-          <div className="flex gap-5 items-baseline-last">
+          <div className="flex flex-col md:flex-row gap-5 items-baseline-last">
             <input
               className="border-2 border-black rounded-md py-2 px-4 cursor-pointer"
               type="file"
@@ -88,7 +88,7 @@ export default function Home() {
             />
             <button
               onClick={handleUploadImage}
-              className="px-10 py-2 bg-blue-500 text-white font-bold rounded-md cursor-pointer"
+              className="w-full md:px-10 py-2 bg-blue-500 text-white font-bold rounded-md cursor-pointer"
             >
               Upload
             </button>
@@ -96,7 +96,12 @@ export default function Home() {
         </div>
 
         <ImageCart Img={currentPosts} handleDelete={handleDelete} />
-        <Pagination totalPosts={images.length} postsPerPage={postsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <Pagination
+          totalPosts={images.length}
+          postsPerPage={postsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </>
   );
