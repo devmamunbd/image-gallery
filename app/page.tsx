@@ -1,13 +1,15 @@
 "use client";
 import ImageCart from "@/component/ImageCart";
+import ImgModal from "@/component/ImgModal";
 import Pagination from "@/component/Pagination";
 import axios from "axios";
+import Image from "next/image";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function Home() {
   const [images, setImages] = useState<File[]>([]);
-
+  const [modalImg, setModalImg] = useState<string | null>(null);
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
@@ -39,28 +41,32 @@ export default function Home() {
     }
   };
   const handleDelete = (index: number) => {
-    const updatedImages = images.filter((_, i) => i !== index);
-    setImages(updatedImages);
-    console.log("Image deleted successfully", updatedImages);
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then((result) => {
-    //   if (result) {
-    //     const updatedImages = images.filter((_, i) => i !== index);
-    //     setImages(updatedImages);
-    //     Swal.fire({
-    //       title: "Deleted!",
-    //       text: "Your file has been deleted.",
-    //       icon: "success",
-    //     });
-    //   }
-    // });
+    // const updatedImages = images.filter((_, i) => i !== index);
+    // setImages(updatedImages);
+    // console.log("Image deleted successfully", updatedImages);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result) {
+        const updatedImages = images.filter((_, i) => i !== index);
+        setImages(updatedImages);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
+
+  const handleImgClick = (url: string) => {
+    setModalImg(url);
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,6 +108,8 @@ export default function Home() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
+
+       
       </div>
     </>
   );
