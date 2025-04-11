@@ -1,15 +1,12 @@
 "use client";
 import ImageCart from "@/component/ImageCart";
-import ImgModal from "@/component/ImgModal";
 import Pagination from "@/component/Pagination";
 import axios from "axios";
-import Image from "next/image";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function Home() {
   const [images, setImages] = useState<File[]>([]);
-  const [modalImg, setModalImg] = useState<string | null>(null);
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
@@ -65,12 +62,7 @@ export default function Home() {
     });
   };
 
-  const handleImgClick = (url: string) => {
-    setModalImg(url);
-  };
-
   const [currentPage, setCurrentPage] = useState(1);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [postsPerPage, setPostsPerPage] = useState(8);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfPastPost = indexOfLastPost - postsPerPage;
@@ -108,8 +100,6 @@ export default function Home() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
-
-       
       </div>
     </>
   );

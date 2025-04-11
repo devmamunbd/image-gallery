@@ -32,7 +32,6 @@ export default function RootLayout({
       >
         <div className="max-w-4xl container mx-auto">
           <ResponsiveAppBar />
-          {/* <StickyFooter /> */}
           {children}
           <Footer />
         </div>
