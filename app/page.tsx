@@ -63,7 +63,7 @@ export default function Home() {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(8);
+  const postsPerPage = 8;
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfPastPost = indexOfLastPost - postsPerPage;
   const currentPosts = images?.slice(indexOfPastPost, indexOfLastPost);
